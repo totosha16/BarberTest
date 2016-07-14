@@ -1,0 +1,26 @@
+<h2>Поиск контактов</h2>
+
+<form action="/find" method="POST">
+	<div class="input-group">
+		<span class="input-group-addon" id="basic-addon1">
+			<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+	  <input type="text" class="form-control" placeholder="Фамилия Имя Отчество" aria-describedby="basic-addon1" name="name">
+	</div>
+
+	<br>
+		<input class="btn btn-primary btn" type="submit" value="Найти">
+</form>
+
+	<br>
+
+
+<div <%= @hidealert %> class="alert alert-danger" role="alert"><strong>Херня вышла!</strong> Имени <%= @name %> в записной книжке не найдено</div>
+
+
+<ul <%= @hideinfo %> class="list-group">
+  <li class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= @name %></li>
+  <li class="list-group-item"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> <%= @phone %></li>
+  <li class="list-group-item"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%= @mail %></li>
+</ul>
+
+
