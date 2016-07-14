@@ -4,6 +4,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'yaml'
 
+
 get '/' do
 	erb "Hello!! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
 end
@@ -27,6 +28,19 @@ post '/add' do
 
 	@title = 'Поздравляем!'
 	@message = "Контакт #{@username} добавлен в записную книжку"
+
+
+	hh = { 	:name => 'Введите имя',
+			:phone => 'Введите телефон',
+			:mail => 'Введите E-mail' }
+
+	@error = hh.select {|key,_| params[key] == ""}.values.join(", ")
+
+	if @error != ''
+		return erb :add
+	end
+
+
 	erb :messg
 end
 
