@@ -1,5 +1,5 @@
-<h2>Добавление контакта</h2>
-
+<h2 id="clickme">Добавление контакта <<< click me</h2>
+<!-- при клике на заголовок пропадает кнопка Добавить-->
 
 
 <form action="/add" method="POST">
@@ -22,6 +22,17 @@
 	  <input type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" name="mail" value="<%=@mail%>">
 	</div>
 	<br/>
-	<button type="submit" class="btn btn-primary">Добавить</button>
+	<button type="submit" class="btn btn-primary" id="book">Добавить</button>
 </form>
 
+
+
+<script type="text/javascript">
+$(function() {
+
+$( "#clickme" ).click(function() {
+  $( "#book" ).hide( "slow" );
+});
+
+});
+</script>
