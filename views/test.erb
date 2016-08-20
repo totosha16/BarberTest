@@ -1,0 +1,29 @@
+<html lang="en">
+
+<form action="/test" method="POST">
+ 	 <div class="form-group">
+	    <label for="exampleInputEmail1">Введите URL</label>
+	    <input type="css_test" class="form-control" id="exampleInputEmail1" placeholder="URL" name="url_test" value="<%= @url_test %>">
+  	</div>
+
+ 	<div class="form-group">
+	    <label for="exampleInputEmail1">Введите ID</label>
+	    <input type="css_test" class="form-control" id="exampleInputEmail1" placeholder="ID" name="css_test" value="<%= @css_test %>">
+  	</div>
+
+  	 <div class="form-group">
+	    <label for="exampleInputEmail1">Введите xPath</label>
+	    <input type="xpath_test" class="form-control" id="exampleInputEmail1" placeholder="xPath" name="xpath_test" value="<%= @xpath_test %>">
+  	</div>		
+
+	<input class="btn btn-primary btn" type="submit" value="Проверить">
+</form>
+
+	<h2>Результат</h2>
+	<div class="output">
+	  <%= @price %>
+	</div>
+
+
+
+</html>

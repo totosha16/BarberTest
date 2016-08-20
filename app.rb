@@ -3,7 +3,36 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'yaml'
+require 'nokogiri'
+require 'open-uri'
+require 'date'
 
+def surgery opt
+
+	begin
+		html = Nokogiri::HTML(open(opt[:url]))
+
+		@price=nil
+
+		@price=html.css(opt[:cssP]) if opt[:cssP]
+		if opt[:xpathP] && @price
+			@price=@price.xpath(opt[:xpathP]).text.gsub(/\D/,"").to_i
+			@price=@price.round
+		elsif @price==nil && opt[:xpathP]
+			@price=html.xpath(opt[:xpathP]).text.gsub(/\D/,"").to_i
+			@price=@price.round
+		elsif @price==nil
+			@price='Path Error'
+		else
+			@price=@price.text.gsub(/\D/,"").to_i
+			@price=@price.round
+		end
+				
+	rescue
+			@price='Page open Error'
+	end
+
+end
 
 get '/' do
 	erb "Hello!! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
@@ -72,5 +101,32 @@ post '/find' do
 
 		erb :find
 	end
+
+end
+
+get '/test' do
+
+	@url_test = ""
+	@css_test = ""
+	@xpath_test = ""
+
+	erb :test
+end
+
+post '/test' do
+	@url_test = params[:url_test]
+	@css_test = params[:css_test]
+	@xpath_test = params[:xpath_test]
+
+
+	#@url_test="" if @url_test==""
+
+
+	data={:url=>@url_test,
+		:cssP=>@css_test,
+		:xpathP=>@xpath_test}
+		surgery data
+
+	erb :test
 
 end
