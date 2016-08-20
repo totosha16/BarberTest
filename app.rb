@@ -34,6 +34,33 @@ def surgery opt
 
 end
 
+def rude_surgery opt
+
+	begin
+		html = Nokogiri::HTML(open(opt[:url]))
+
+		@rude_price=nil
+
+		@rude_price=html.css(opt[:cssP]) if opt[:cssP]
+		if opt[:xpathP] && @rude_price
+			@rude_price=@rude_price.xpath(opt[:xpathP])#.text.gsub(/\D/,"").to_i
+			#@rude_price=@rude_price.round
+		elsif @rude_price==nil && opt[:xpathP]
+			@rude_price=html.xpath(opt[:xpathP])#.text.gsub(/\D/,"").to_i
+			#@rude_price=@rude_price.round
+		elsif @rude_price==nil
+			@rude_price='Path Error'
+		else
+			@rude_price=@rude_price#.text.gsub(/\D/,"").to_i
+			#@rude_price=@rude_price.round
+		end
+				
+	rescue
+			@rude_price='Page open Error'
+	end
+
+end
+
 get '/' do
 	erb "Hello!! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
 end
@@ -118,14 +145,16 @@ post '/test' do
 	@css_test = params[:css_test]
 	@xpath_test = params[:xpath_test]
 
-
-	#@url_test="" if @url_test==""
-
+	@url_test = nil if @url_test == ""
+	@css_test = nil if @css_test == ""
+	@xpath_test = nil if @xpath_test == ""
 
 	data={:url=>@url_test,
 		:cssP=>@css_test,
 		:xpathP=>@xpath_test}
+
 		surgery data
+		rude_surgery data
 
 	erb :test
 
